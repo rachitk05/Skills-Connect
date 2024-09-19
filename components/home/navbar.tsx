@@ -48,7 +48,7 @@ export default function Header() {
                     className="sm:hidden"
                 />
                 <NavbarBrand>
-                    <p className="font-bold text-inherit">SKILL CONTENT</p>
+                    <p className="font-bold text-inherit">SKILL CONNECT</p>
                 </NavbarBrand>
             </NavbarContent>
 

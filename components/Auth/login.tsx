@@ -19,35 +19,31 @@ export default function Login() {
         return !validateEmail(email);
     }, [email]);
 
+    // In your Login component
     const handleLogin = async () => {
-        // try {
-        //     const response = await fetch('https://academics.newtonschool.co/api/v1/user/signup', {
-        //         method: 'POST',
-        //         headers: {
-        //             'accept': 'application/json',
-        //             'projectId': projectId,
-        //             'Content-Type': 'application/json'
-        //         },
-        //         body: JSON.stringify({
-        //             name: name,
-        //             email: email,
-        //             password: password,
-        //             appType: 'music'
-        //         })
-        //     });
-        //     const result = await response.json();
-        //     console.log(result)
-        //     if (response.ok) {
-        //         localStorage.setItem('user', JSON.stringify(result));
-        //         alert('Sign up successful');
-        //         navigate('/login');
-        //     } else {
-        //         alert(result.message || 'Sign up failed');
-        //     }
-        // } catch (error) {
-        //     alert('Error Logging in');
-        // }
+        try {
+            const response = await fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
+            const data = await response.json();
+            if (response.ok) {
+                console.log("response ok", response);
+                localStorage.setItem('token', data.token);
+                alert('Login successful');
+            } else {
+                alert(data.message);
+            }
+        } catch (error) {
+            console.error('Error during login', error);
+            alert('Error during login');
+        }
     };
+
+
 
     return (
         <div className="bg-login min-h-screen bg-cover bg-center flex items-center justify-around">
@@ -57,14 +53,13 @@ export default function Login() {
                 <div className="flex-col bg-white dark:bg-zinc-900  p-10 rounded-2xl max-w-md space-y-4">
                     <h3 className="font-bold text-xl mb-4">Log In</h3>
                     <Input
-                        isClearable
                         isRequired
                         type={"email"}
                         variant={"bordered"}
                         label={"Email"}
                         value={email}
                         onValueChange={setEmail}
-                        className="max-w-sm"
+                        className="max-w-sm flex items-end"
                         isInvalid={isInvalid}
                         color={isInvalid ? "danger" : "default"}
                         errorMessage="Please enter a valid email"

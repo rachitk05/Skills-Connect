@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const Connection = async (): Promise<void> => {
+const Connection = async () => {
     const url = process.env.MONGODB_URL || ''; // Store MongoDB URL in environment variable
 
     if (mongoose.connection.readyState >= 1) return; // Prevent multiple connections
