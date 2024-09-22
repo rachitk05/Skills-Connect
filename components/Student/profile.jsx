@@ -13,42 +13,6 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Pencil, Coffee, LinkIcon, PlusCircle, X } from 'lucide-react'
 
-interface Experience {
-    title: string;
-    company: string;
-    duration: string;
-    description: string;
-}
-
-interface Education {
-    degree: string;
-    school: string;
-    year: string;
-}
-
-interface Project {
-    name: string;
-    url: string;
-    description: string;
-}
-
-interface ProfileData {
-    name: string;
-    email: string;
-    age: number;
-    tagline: string;
-    bio: string;
-    portfolio: string;
-    profilePhoto: string;
-    skills: string[];
-    experience: Experience[];
-    education: Education[];
-    certifications: string[];
-    projects: Project[];
-    interests: string[];
-    languages: string[];
-}
-
 const initialProfileData = {
     name: "Charlotte King",
     email: "charlotte.king@example.com",
@@ -87,7 +51,7 @@ const initialProfileData = {
     ],
     age: 21,
     bio: "Passionate iOS developer with a keen eye for design and a drive for creating intuitive mobile applications. I thrive on turning complex problems into simple, beautiful, and intuitive interface designs. When I'm not coding, you'll find me exploring new coffee shops or contributing to open-source projects.",
-    profilePhoto: "https://via.placeholder.com/150",
+    profilePhoto: "",
     tagline: "Crafting Tomorrow's Apps, One Line at a Time",
     projects: [
         {
@@ -394,7 +358,7 @@ export default function EditableProfileDisplay() {
                                         alt={profileData.name}
                                         width={150}
                                         height={150}
-                                        className="rounded-full mx-auto mb-4"
+                                        className="rounded-full mx-auto mb-4 border-1"
                                     />
                                     <h1 className="text-3xl font-bold text-center mb-2">{profileData.name}</h1>
                                     <p className="text-gray-600 text-center mb-4">{profileData.tagline}</p>

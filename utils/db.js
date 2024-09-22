@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 
-const Connection = async () => {
-    const url = process.env.MONGODB_URL || ''; // Store MongoDB URL in environment variable
+const connectToDatabase = async () => {
+    const url = process.env.MONGODB_URI || ''; // Store MongoDB URL in environment variable
 
     if (mongoose.connection.readyState >= 1) return; // Prevent multiple connections
 
@@ -18,4 +18,4 @@ const Connection = async () => {
     }
 };
 
-export default Connection;
+export default connectToDatabase;

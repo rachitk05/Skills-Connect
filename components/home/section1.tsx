@@ -1,16 +1,31 @@
 'use client'
 import React from "react";
-import {Button} from "@nextui-org/react";
-import {Input} from "@nextui-org/input";
+import { Button } from "@nextui-org/react";
+import { Input } from "@nextui-org/input";
+import Link from "next/link";
 
-export default function Section1()  {
+export default function Section1() {
     return (
         <section>
-            <div className="flex flex-col gap-10 justify-center items-center rounded-2xl p-32 lg:mx-64 md-mx-48 my-10 text-white bg-[url('https://fiverr-res.cloudinary.com/image/upload/f_auto,q_auto/v1/attachments/generic_asset/asset/678686c47c024e18e773c75e90aaab1c-1705999902381/hero-xl-x1.png')] bg-no-repeat	 bg-cover	">
-                <h1 className={"text-5xl"}>Find the right <span className={"text-green-500 italic"}>freelance</span><br/> service, right away</h1>
-                <div className="flex justify-center items-center w-full">
-                    <Input type="text" variant={"bordered"} className={"bg-white text-black rounded-2xl w-[50%]"} size={"lg"} label="Search for any Service" />
-                    <button className={"relative right-16"}>
+            <div
+                className="flex flex-col gap-10 justify-center items-center rounded-2xl p-6 sm:p-10 md:p-16 lg:p-24 xl:p-32 mx-4 sm:mx-8 md:mx-12 lg:mx-24 my-10 text-white bg-[url('https://fiverr-res.cloudinary.com/image/upload/f_auto,q_auto/v1/attachments/generic_asset/asset/678686c47c024e18e773c75e90aaab1c-1705999902381/hero-xl-x1.png')] bg-no-repeat bg-cover bg-center">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-center">
+                    Find the right <span className="text-green-500 italic">freelance</span>
+                    <br /> service, right away
+                </h1>
+                <div className="flex flex-col sm:flex-row w-full gap-4 sm:gap-6 items-center justify-center">
+                    <Input
+                        type="text"
+                        variant="bordered"
+                        className="bg-white text-black rounded-2xl w-full sm:w-3/4 md:w-2/3 lg:w-1/2"
+                        size="lg"
+                        aria-label="Search for any service"
+                        placeholder="Search for any Service"
+                    />
+                    <button
+                        className="mt-4 sm:mt-0 sm:ml-4 md:relative md:right-24"
+                        aria-label="Search"
+                    >
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100"
                              viewBox="0 0 100 100">
                             <path fill="#fff"
@@ -85,22 +100,30 @@ export default function Section1()  {
                                       d="M46.5,51.75c-0.138,0-0.25-0.112-0.25-0.25s0.112-0.25,0.25-0.25c0.923,0,1.804-0.212,2.62-0.63 c0.122-0.06,0.273-0.014,0.336,0.108c0.063,0.123,0.014,0.273-0.109,0.337C48.461,51.52,47.502,51.75,46.5,51.75z"></path>
                             </g>
                         </svg>
+
                     </button>
                 </div>
             </div>
-            <hr/>
-            <div className="flex flex-col items-center justify-center gap-10 my-16">
-                <h1 className={"text-3xl font-bold text-center"}>Where Skills meet Opportunity</h1>
-                <h2 className={"text-1xl font-bold text-center"}>Your gateway to project success—start, bid, and achieve
-                    your goals here.</h2>
-                <div className="flex items-center justify-center w-full gap-10">
-                    <Button className={"w-1/6 p-8 bg-black text-white text-xl"} color={"primary"} variant={"solid"}>Find
-                        Your Next Hire</Button>
-                    <Button
-                        className={"w-1/6 p-8 bg-transparent border-2 hover:bg-black hover:text-white text-black text-xl"}>Find
-                        Your Next Job</Button>
+            <hr className="my-8"/>
+            <div className="flex flex-col items-center justify-center gap-8 sm:gap-10 md:gap-12 my-16">
+                <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center">
+                    Where Skills meet Opportunity
+                </h1>
+                <h2 className="text-sm sm:text-base md:text-lg font-bold text-center">
+                    Your gateway to project success—start, bid, and achieve your goals here.
+                </h2>
+                <div className="flex flex-col sm:flex-row items-center justify-center w-full gap-4 sm:gap-6">
+                    <Button className="w-full max-w-sm py-12 sm:p-8  sm:w-1/3 md:p-8 lg:p-8 md:w-1/4 p-4 bg-black text-white text-lg" color="primary"
+                            variant="solid">
+                        Find Your Next Hire
+                    </Button>
+                    <Button as={Link} href={'/jobs'}
+                        className="w-full max-w-sm sm:p-8 py-12 sm:w-1/3 md:p-8 lg:p-8 md:w-1/4 p-4 bg-transparent border-2 border-black hover:bg-black hover:text-white text-black text-lg">
+                        Find Your Next Job
+                    </Button>
                 </div>
             </div>
         </section>
     );
-};
+}
+

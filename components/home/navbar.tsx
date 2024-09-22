@@ -118,7 +118,7 @@ export default function Header() {
                     </Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link color="foreground" href="#">
+                    <Link color="foreground" href="/jobs">
                         For Job Seekers
                     </Link>
                 </NavbarItem>

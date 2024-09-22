@@ -8,7 +8,7 @@ interface QuoteProps {
 
 const Quote: React.FC<QuoteProps> = ({ content }) => {
     return (
-        <div className="flex flex-col justify-center items-start bg-amber-200 gap-8 px-12 py-20 rounded-3xl">
+        <div className="flex flex-col justify-center items-start bg-amber-200 gap-8 px-6 py-12 sm:px-8 sm:py-14 md:px-10 md:py-16 lg:px-12 lg:py-20 rounded-3xl">
             <div className="bg-black rounded-full">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -33,7 +33,7 @@ const Quote: React.FC<QuoteProps> = ({ content }) => {
                     />
                 </svg>
             </div>
-            <p className={""}>{content}</p>
+            <p className="text-sm sm:text-md md:text-lg lg:text-xl">{content}</p>
         </div>
     );
 };

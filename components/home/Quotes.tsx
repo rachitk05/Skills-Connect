@@ -44,23 +44,24 @@ const Quotes: React.FC = () => {
     ];
 
     return (
-        <div className={"lg:mx-64 md-mx-48 flex-col flex gap-5 my-32"}>
-            <h1 className="text-xl font-bold leading-tight">Quotes</h1>
-            <h3 className={"text-3xl font-bold"}>From our Users</h3>
-            <Carousel opts={{
-                align: "start",
-            }}
-                      className="w-full ">
-                <CarouselContent className="md:basis-1/2 lg:basis-1/3">
-                    {quotes.map((quote) => {
-                        return (
-                            <CarouselItem key={quote.id} className="md:basis-1/2 lg:basis-1/3">
-                                <div className="">
-                                    <Quote content={quote.comment}/>
-                                </div>
-                            </CarouselItem>
-                        )
-                    })}
+        <div className="flex-col flex gap-5 my-32 px-4 sm:px-8 md:px-12 lg:mx-64">
+            <h1 className="text-lg sm:text-xl md:text-2xl font-bold leading-tight">Quotes</h1>
+            <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">From our Users</h3>
+            <Carousel
+                opts={{
+                    align: "start",
+                }}
+                className="w-full"
+            >
+                <CarouselContent className="flex gap-4">
+                    {quotes.map((quote) => (
+                        <CarouselItem
+                            key={quote.id}
+                            className="w-full sm:w-1/2 md:w-1/3 lg:w-1/4"
+                        >
+                            <Quote content={quote.comment} />
+                        </CarouselItem>
+                    ))}
                 </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />

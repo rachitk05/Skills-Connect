@@ -8,13 +8,13 @@ interface Leader {
 }
 
 interface Benefit {
-    icon: string; // Assuming you will replace this with the actual icon path
+    icon: string;
     text: string;
 }
 
 export interface Job extends Document {
     title: string;
-    company: string;
+    companyId: mongoose.Types.ObjectId; // Reference to Company
     logo: string;
     location: string;
     salary: string;
@@ -22,6 +22,9 @@ export interface Job extends Document {
     remoteWork: string;
     skills: string[];
     description: string;
+    minimumQualifications: string;
+    responsibilities: string[];
+    experienceRequired: string;
     leaders: Leader[];
     benefits: Benefit[];
 }
@@ -40,7 +43,7 @@ const BenefitSchema = new Schema<Benefit>({
 
 const JobSchema = new Schema<Job>({
     title: { type: String, required: true },
-    company: { type: String, required: true },
+    companyId: { type: Schema.Types.ObjectId, ref: 'Company', required: true }, // Reference to Company
     logo: { type: String, required: true },
     location: { type: String, required: true },
     salary: { type: String, required: true },
@@ -48,6 +51,9 @@ const JobSchema = new Schema<Job>({
     remoteWork: { type: String, required: true },
     skills: { type: [String], required: true },
     description: { type: String, required: true },
+    minimumQualifications: { type: String, required: true },
+    responsibilities: { type: [String], required: true },
+    experienceRequired: { type: String, required: true },
     leaders: { type: [LeaderSchema], required: true },
     benefits: { type: [BenefitSchema], required: true },
 });

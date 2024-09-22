@@ -1,84 +1,58 @@
 'use client'
 import React from 'react'
-import {Button} from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
+import Link from "next/link";
+
+// Reusable component for each feature
+interface FeatureProps {
+    text: string;
+}
+const Feature: React.FC<FeatureProps>  = ({ text }) => (
+    <div className="flex justify-center items-center gap-5">
+            <img src={"https://img.icons8.com/?size=50&id=111399&format=png&color=000000"}/>
+            <p>{text}</p>
+    </div>
+);
+
 export default function WhyUs() {
-    return(
-        <div className={"flex items-center justify-around divide-x w-full border-b-1 border-gray-200 lg:mx-48 md-mx-32"}>
-            <div className={"flex flex-col justify-center items-start gap-10 "}>
-                <p className={"font-bold text-xl"}>Got Talent?</p>
-                <h3 className={"font-bold text-3xl"}>Why job seekers love us</h3>
-                <div className={"flex flex-col justify-center items-center gap-8"}>
-                    <div className={"flex justify-center items-center gap-5"}>
-                        <div className={"p-5 p-5 bg-black rounded-full overflow-hidden"}>
-
-                        </div>
-                        <p>Connect directly with founders at top startups - no third party recruiters allowed.</p>
+    return (
+        <section className="w-full border-b border-gray-200">
+            <div
+                className="flex flex-col lg:flex-row justify-around items-center lg:gap-16 gap-10  md:mx-32 p-6">
+                {/* Left Section */}
+                <div className="flex flex-col gap-10 lg:min-w-1/2">
+                    <p className="font-bold text-xl">Got Talent?</p>
+                    <h3 className="font-bold text-3xl">Why job seekers love us</h3>
+                    <div className="flex flex-col gap-8 items-start ">
+                        <Feature
+                            text="Connect directly with founders at top startups - no third party recruiters allowed."/>
+                        <Feature text="No job boards, just personal connections with founders."/>
+                        <Feature text="Get matched with startups that align with your career goals."/>
+                        <Feature text="Access exclusive job opportunities not listed elsewhere."/>
                     </div>
-                    <div className={"flex justify-center items-center gap-5"}>
-                        <div className={"p-5 p-5 bg-black rounded-full overflow-hidden"}>
-
-                        </div>
-                        <p>Connect directly with founders at top startups - no third party recruiters allowed.</p>
+                    <div className="flex gap-5">
+                        <Button variant="bordered" color="primary">Learn More</Button>
+                        <Button as={Link} variant="solid" color="primary" href={"/signup"}>Sign Up</Button>
                     </div>
-                    <div className={"flex justify-center items-center gap-5"}>
-                        <div className={"p-5 p-5 bg-black rounded-full overflow-hidden"}>
-
-                        </div>
-                        <p>Connect directly with founders at top startups - no third party recruiters allowed.</p>
-                    </div>
-                    <div className={"flex justify-center items-center gap-5"}>
-                        <div className={"p-5 p-5 bg-black rounded-full overflow-hidden"}>
-
-                        </div>
-                        <p>Connect directly with founders at top startups - no third party recruiters allowed.</p>
-                    </div>
-
                 </div>
 
-                <div className={"flex gap-5 "}>
-                    <Button variant={"bordered"} color={"primary"}>Learn More</Button>
-                    <Button variant={"solid"} color={"primary"}>Sign Up</Button>
+                {/* Right Section */}
+                <div className="flex flex-col gap-10 lg:min-w-1/2 bg-gray-200 p-6 rounded-lg">
+                    <p className="font-bold text-xl">Got Talent?</p>
+                    <h3 className="font-bold text-3xl">Why job seekers love us</h3>
+                    <div className="flex flex-col gap-8 items-start">
+                        <Feature
+                            text="Connect directly with founders at top startups - no third party recruiters allowed."/>
+                        <Feature text="No job boards, just personal connections with founders."/>
+                        <Feature text="Get matched with startups that align with your career goals."/>
+                        <Feature text="Access exclusive job opportunities not listed elsewhere."/>
+                    </div>
+                    <div className="flex gap-5 mt-6">
+                        <Button variant="bordered" color="primary">Learn More</Button>
+                        <Button as={Link} variant="solid" color="primary"  href={"/signup"}>Sign Up</Button>
+                    </div>
                 </div>
-
             </div>
-            <div className={"flex flex-col justify-center items-start gap-10 w-1/2 p-20 py-25 bg-gray-200"}>
-                <p className={"font-bold text-xl"}>Got Talent?</p>
-                <h3 className={"font-bold text-3xl"}>Why job seekers love us</h3>
-                <div className={"flex flex-col justify-center items-center gap-8"}>
-                    <div className={"flex justify-center items-center gap-5"}>
-                        <div className={"p-5 p-5 bg-black rounded-full overflow-hidden"}>
-
-                        </div>
-                        <p>Connect directly with founders at top startups - no third party recruiters allowed.</p>
-                    </div>
-                    <div className={"flex justify-center items-center gap-5"}>
-                        <div className={"p-5 p-5 bg-black rounded-full overflow-hidden"}>
-
-                        </div>
-                        <p>Connect directly with founders at top startups - no third party recruiters allowed.</p>
-                    </div>
-                    <div className={"flex justify-center items-center gap-5"}>
-                        <div className={"p-5 p-5 bg-black rounded-full overflow-hidden"}>
-
-                        </div>
-                        <p>Connect directly with founders at top startups - no third party recruiters allowed.</p>
-                    </div>
-                    <div className={"flex justify-center items-center gap-5"}>
-                        <div className={"p-5 p-5 bg-black rounded-full overflow-hidden"}>
-
-                        </div>
-                        <p>Connect directly with founders at top startups - no third party recruiters allowed.</p>
-                    </div>
-
-                </div>
-
-                <div className={"flex gap-5 "}>
-                    <Button variant={"bordered"} color={"primary"}>Learn More</Button>
-                    <Button variant={"solid"} color={"primary"}>Sign Up</Button>
-                </div>
-
-            </div>
-            <hr/>
-        </div>
+        </section>
     )
 }
