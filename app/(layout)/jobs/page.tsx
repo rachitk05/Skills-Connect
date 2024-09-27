@@ -1,5 +1,5 @@
 'use client'
-import Jobs from "@/components/ProjectListing/jobListing";
+import Jobs from "@/components/jobs/jobListing";
 export default function App() {
     return (
         <div>

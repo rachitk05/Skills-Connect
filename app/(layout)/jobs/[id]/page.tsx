@@ -1,6 +1,6 @@
 'use client';
 import { useParams } from 'next/navigation';
-import JobDetails from "@/components/ProjectListing/jobDescription";
+import JobDetails from "@/components/jobs/jobDescription";
 
 export default function App() {
     const { id } = useParams(); // This will extract the id from the URL

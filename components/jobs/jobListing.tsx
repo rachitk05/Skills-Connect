@@ -30,6 +30,7 @@ const categoryColors: Record<string, string> = {
 function JobCard({ job }: { job: Job }) {
     const gradientClass = categoryColors[job.title] || "from-blue-400 to-gray-800";
     const router = useRouter();
+    console.log(job)
     return (
         <div className="bg-white rounded-2xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-105 flex flex-col">
             <div className={`h-2 bg-gradient-to-r ${gradientClass}`} />
@@ -37,7 +38,7 @@ function JobCard({ job }: { job: Job }) {
                 <div className="flex items-center justify-between mb-4">
                     <Avatar className={`h-12 w-12 ring-2 ring-opacity-50 ring-${gradientClass.split('-')[2]}`}>
                         <AvatarImage src={job.logo} alt={job.company} />
-                        <AvatarFallback>{job.company[0]}</AvatarFallback>
+                        {/*<AvatarFallback>{job.company[0]}</AvatarFallback>*/}
                     </Avatar>
                     <Badge variant="secondary" className={`bg-gradient-to-r ${gradientClass} text-white`}>
                         {job.title}

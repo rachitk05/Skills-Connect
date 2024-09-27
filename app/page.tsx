@@ -7,9 +7,10 @@ import WhyUs from "@/components/home/whyUs";
 import Section4 from "@/components/home/section4";
 import Quotes from "@/components/home/Quotes";
 import Footer from "@/components/home/footer";
+import {Toaster} from "@/components/ui/toaster";
 export default function App() {
     return (<>
-            <Header/>
+            <Toaster />
             <Section1/>
             <Section2/>
             <WhyUs/>
