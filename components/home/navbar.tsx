@@ -40,16 +40,32 @@ export default function Header() {
     };
 
     const menuItems = [
-        "Profile",
-        "Dashboard",
-        "Activity",
-        "Analytics",
-        "System",
-        "Deployments",
-        "My Settings",
-        "Team Settings",
-        "Help & Feedback",
-        "Log Out",
+
+        {
+            label:"Home",
+            href:"/"
+        },
+        {
+            label:"About Us",
+            href:"/about_us"
+        },
+        {
+            label:"For Job Seekers",
+            href:"/company/all"
+        },
+
+        {
+            label:"For Companies",
+            href:"/student/all"
+        },
+        {
+            label:"Post a new Job",
+            href:"/jobs/new"
+        },
+        {
+            label:"Find you next job",
+            href:"/jobs"
+        },
     ];
 
     const icons = {
@@ -203,10 +219,10 @@ export default function Header() {
                                 index === 2 ? "primary" : index === menuItems.length - 1 ? "danger" : "foreground"
                             }
                             className="w-full"
-                            href="#"
+                            href={item.href}
                             size="lg"
                         >
-                            {item}
+                            {item.label}
                         </Link>
                     </NavbarMenuItem>
                 ))}
