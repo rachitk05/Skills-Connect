@@ -1,28 +1,42 @@
 'use client'
-import React, {useState, useMemo} from "react";
-import {Button, Checkbox, Input} from "@nextui-org/react";
+import React, {useState, useMemo, useEffect} from "react";
+import {Button, Checkbox, Input, Select, SelectItem} from "@nextui-org/react";
 import {EyeSlashFilledIcon} from "@/components/Auth/EyeSlashFilledIcon";
 import {EyeFilledIcon} from "@/components/Auth/EyeFilledIcon";
 import {useRouter} from 'next/navigation';
 import Link from "next/link";
 import {getAuth, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider} from "firebase/auth";
 import {app} from '@/firebase.config';
+import { useAuthStore } from "@/authStore";
 
 export default function Signup() {
     const auth = getAuth(app);
     const googleProvider = new GoogleAuthProvider();
     const router = useRouter();
 
+    const { setIsLoggedIn, setUserType } = useAuthStore();
+
     const [formData, setFormData] = useState({
         name: "",
         email: "",
         password: "",
         confirmPassword: "",
+        userType: "student" as "student" | "company",
     });
     const [isPassVisible, setIsPassVisible] = useState(false);
     const [isConfPassVisible, setIsConfPassVisible] = useState(false);
     const [termsAccepted, setTermsAccepted] = useState(false);
     const [error, setError] = useState({email: "", password: "", confirmPassword: ""});
+
+    useEffect(() => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const storedUserType = localStorage.getItem('userType') as "student" | "company" | null;
+        if (isLoggedIn && storedUserType) {
+            setIsLoggedIn(true);
+            setUserType(storedUserType);
+            router.push(storedUserType === 'company' ? '/company/register' : '/student/register');
+        }
+    }, []);
 
     const togglePassVisibility = () => setIsPassVisible(!isPassVisible);
     const toggleConfPassVisibility = () => setIsConfPassVisible(!isConfPassVisible);
@@ -53,21 +67,29 @@ export default function Signup() {
 
         try {
             await createUserWithEmailAndPassword(auth, formData.email, formData.password);
-            router.push('/'); // Redirect to login page
+            setIsLoggedIn(true);
+            setUserType(formData.userType);
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userType', formData.userType);
+            router.push(formData.userType === 'company' ? '/company/register' : '/student/register');
         } catch (error:any) {
             if (error.code === 'auth/email-already-in-use') {
                 setError((prev) => ({...prev, email: "Email is already in use. Please log in."}));
             } else {
-                setError((prev) => ({...prev, email: "Google Sign-In failed. Please try again."}));
+                setError((prev) => ({...prev, email: "Signup failed. Please try again."}));
             }
         }
     };
 
     const handleGoogleSignIn = async () => {
-        try {
-            await signInWithPopup(auth, googleProvider);
-            router.push('/');
-        } catch (error: any) {
+            try {
+                await signInWithPopup(auth, googleProvider);
+                setIsLoggedIn(true);
+                setUserType(formData.userType);
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('userType', formData.userType);
+                router.push(formData.userType === 'company' ? '/company/register' : '/student/register');
+            } catch (error: any) {
             if (error.code === 'auth/account-exists-with-different-credential') {
                 setError((prev) => ({ ...prev, email: "An account with this email already exists using a different sign-in method. Please try signing in using another method." }));
             } else {
@@ -76,7 +98,6 @@ export default function Signup() {
         }
     };
 
-
     return (
         <div className="bg-signup min-h-screen bg-cover bg-center flex items-center justify-center px-4">
             <form onSubmit={handleSignup} className="bg-white dark:bg-zinc-900 p-8 rounded-2xl w-full max-w-md space-y-4">
@@ -84,6 +105,17 @@ export default function Signup() {
 
                 {error.email && <p className="text-red-600">{error.email}</p>}
                 {error.confirmPassword && <p className="text-red-600">{error.confirmPassword}</p>}
+
+                <Select
+                    label="User Type"
+                    placeholder="Select user type"
+                    selectedKeys={[formData.userType]}
+                    className="w-full"
+                    onChange={(e) => setFormData({...formData, userType: e.target.value as "student" | "company"})}
+                >
+                    <SelectItem key="student" value="student">Student</SelectItem>
+                    <SelectItem key="company" value="company">Company</SelectItem>
+                </Select>
 
                 <Input
                     isRequired
@@ -182,6 +214,3 @@ export default function Signup() {
         </div>
     );
 }
-
-
-

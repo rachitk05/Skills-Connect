@@ -1,66 +1,88 @@
 'use client'
-import React, { useState, useMemo } from "react";
-import { Button, Input } from "@nextui-org/react";
+import React, { useState, useMemo, useEffect } from "react";
+import { Button, Input, Select, SelectItem } from "@nextui-org/react";
 import { EyeSlashFilledIcon } from "@/components/Auth/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/components/Auth/EyeFilledIcon";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getAuth, signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { app } from "@/firebase.config";
+import { useAuthStore } from "@/authStore";
 
 export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [userType, setUserTypeLocal] = useState<"student" | "company">("student");
     const [isVisible, setIsVisible] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const router = useRouter();
     const auth = getAuth(app);
     const googleProvider = new GoogleAuthProvider();
 
-    // Email validation function
-    const validateEmail = (email: string) => email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
+    const { setIsLoggedIn, setUserType } = useAuthStore();
 
-    // Check if email input is valid
+    const validateEmail = (email: string) => email.match(/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i);
     const isInvalid = useMemo(() => email !== "" && !validateEmail(email), [email]);
 
-    // Login with email and password
+    useEffect(() => {
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const storedUserType = localStorage.getItem('userType') as "student" | "company" | null;
+        if (isLoggedIn && storedUserType) {
+            setIsLoggedIn(true);
+            setUserType(storedUserType);
+            router.push(storedUserType === 'company' ? '/company/new' : '/student/register');
+        }
+    }, []);
+
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
-            console.log("Student signed in:", userCredential.user);
-            router.push('/');
+            console.log("User signed in:", userCredential.user);
+            setIsLoggedIn(true);
+            setUserType(userType);
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userType', userType);
+            router.push(userType === 'company' ? '/company/new' : '/student/register');
         } catch (error) {
             setErrorMessage('Invalid email or password');
         }
     };
 
-    // Login with Google
     const handleGoogleSignIn = async () => {
         try {
             const result = await signInWithPopup(auth, googleProvider);
             console.log("Google Sign-In:", result.user);
-            router.push('/');
+            setIsLoggedIn(true);
+            setUserType(userType);
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('userType', userType);
+            router.push(userType === 'company' ? '/company/register' : '/student/register');
         } catch (error) {
             setErrorMessage('Google Sign-In failed');
         }
     };
 
-    // Toggle password visibility
     const toggleVisibility = () => setIsVisible(!isVisible);
 
-    // Handle form submission manually
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        handleLogin(e);
-    };
 
     return (
         <div className="bg-login min-h-screen bg-cover bg-center flex items-center justify-center px-4">
-            <form onSubmit={handleSubmit} className="bg-white dark:bg-zinc-900 p-8 rounded-2xl w-full max-w-md space-y-4">
+            <form onSubmit={handleLogin} className="bg-white dark:bg-zinc-900 p-8 rounded-2xl w-full max-w-md space-y-4">
                 <h3 className="font-bold text-xl mb-4">Log In</h3>
 
                 {errorMessage && <p className="text-red-500 text-sm text-center">{errorMessage}</p>}
+
+                <Select
+                    label="User Type"
+                    placeholder="Select user type"
+                    selectedKeys={[userType]}
+                    className="w-full"
+                    onChange={(e) => setUserTypeLocal(e.target.value as "student" | "company")}
+                >
+                    <SelectItem key="student" value="student">Student</SelectItem>
+                    <SelectItem key="company" value="company">Company</SelectItem>
+                </Select>
 
                 <Input
                     isRequired
@@ -72,7 +94,7 @@ export default function Login() {
                     className="w-full"
                     isInvalid={isInvalid}
                     color={isInvalid ? "danger" : "default"}
-                    errorMessage="Please enter a valid email"
+                    errorMessage={isInvalid && "Please enter a valid email"}
                 />
                 <Input
                     isRequired
@@ -94,8 +116,7 @@ export default function Login() {
                     className="w-full"
                 />
 
-
-                <Button color="primary" className="w-full" type={"submit"}>
+                <Button color="primary" className="w-full" type="submit">
                     Log In
                 </Button>
 
@@ -106,7 +127,7 @@ export default function Login() {
                 </div>
 
                 <Button variant="bordered" className="w-full" onClick={handleGoogleSignIn}>
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100%" height="100%"
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24"
                          viewBox="0 0 48 48">
                         <path fill="#FFC107"
                               d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>
@@ -121,7 +142,7 @@ export default function Login() {
                 </Button>
 
                 <p className="text-center">
-                    Don’t have an account? <Link href="/signup" className="text-blue-600">Sign Up</Link>
+                    Don't have an account? <Link href="/signup" className="text-blue-600">Sign Up</Link>
                 </p>
             </form>
         </div>

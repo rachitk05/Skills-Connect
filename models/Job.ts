@@ -14,11 +14,11 @@ interface Benefit {
 
 export interface Job extends Document {
     title: string;
-    companyId: mongoose.Types.ObjectId; // Reference to Company
+    companyId: number // Reference to Company
+    company: string; // Company name
     logo: string;
     location: string;
     salary: string;
-    visaSponsorship: boolean;
     remoteWork: string;
     skills: string[];
     description: string;
@@ -27,6 +27,7 @@ export interface Job extends Document {
     experienceRequired: string;
     leaders: Leader[];
     benefits: Benefit[];
+    proposals: number; // Track number of proposals
 }
 
 const LeaderSchema = new Schema<Leader>({
@@ -43,11 +44,11 @@ const BenefitSchema = new Schema<Benefit>({
 
 const JobSchema = new Schema<Job>({
     title: { type: String, required: true },
-    companyId: { type: Schema.Types.ObjectId, ref: 'Company', required: true }, // Reference to Company
+    companyId: { type: Number, required: false }, // Reference to Company
+    company: { type: String, required: true }, // New field for company name
     logo: { type: String, required: true },
     location: { type: String, required: true },
     salary: { type: String, required: true },
-    visaSponsorship: { type: Boolean, required: true },
     remoteWork: { type: String, required: true },
     skills: { type: [String], required: true },
     description: { type: String, required: true },
@@ -56,6 +57,7 @@ const JobSchema = new Schema<Job>({
     experienceRequired: { type: String, required: true },
     leaders: { type: [LeaderSchema], required: true },
     benefits: { type: [BenefitSchema], required: true },
+    proposals: { type: Number, default: 0, required: true }, // Track number of proposals
 });
 
 export default mongoose.models.Job || mongoose.model<Job>('Job', JobSchema);

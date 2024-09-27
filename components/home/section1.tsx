@@ -3,8 +3,11 @@ import React from "react";
 import { Button } from "@nextui-org/react";
 import { Input } from "@nextui-org/input";
 import Link from "next/link";
+import {useRouter} from "next/navigation";
 
 export default function Section1() {
+    const router = useRouter();
+    
     return (
         <section>
             <div
@@ -25,6 +28,7 @@ export default function Section1() {
                     <button
                         className="mt-4 sm:mt-0 sm:ml-4 md:relative md:right-24"
                         aria-label="Search"
+                        onClick={() => router.push("/coming_soon")}
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100"
                              viewBox="0 0 100 100">
@@ -110,10 +114,10 @@ export default function Section1() {
                     Where Skills meet Opportunity
                 </h1>
                 <h2 className="text-sm sm:text-base md:text-lg font-bold text-center">
-                    Your gateway to project success—start, bid, and achieve your goals here.
+                    Your gateway to success starts here—explore, bid, and make a mark with our streamlined platform designed for you.
                 </h2>
                 <div className="flex flex-col sm:flex-row items-center justify-center w-full gap-4 sm:gap-6">
-                    <Button className="w-full max-w-sm py-12 sm:p-8  sm:w-1/3 md:p-8 lg:p-8 md:w-1/4 p-4 bg-black text-white text-lg" color="primary"
+                    <Button as={Link} href={"/jobs/new"} className="w-full max-w-sm py-12 sm:p-8  sm:w-1/3 md:p-8 lg:p-8 md:w-1/4 p-4 bg-black text-white text-lg" color="primary"
                             variant="solid">
                         Find Your Next Hire
                     </Button>

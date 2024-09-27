@@ -19,29 +19,46 @@ const Quotes: React.FC = () => {
     const quotes: QuoteData[] = [
         {
             id: 1,
-            comment: "I can't imagine my day-to-day without this platform. Life would be a lot more difficult.",
+            comment: "Skill Connect has made my work so much more efficient. I can't imagine my day-to-day tasks without it. It’s like having an extra set of hands!"
         },
         {
             id: 2,
-            comment: "This service has revolutionized the way I work. It's a total game-changer!",
+            comment: "This platform has completely changed the way I approach freelance work. It's streamlined every process and saved me countless hours. Truly a game-changer."
         },
         {
             id: 3,
-            comment: "I never realized how much I needed this until I started using it. Highly recommended!",
+            comment: "Before using Skill Connect, managing multiple projects felt overwhelming. Now, I handle everything smoothly and effortlessly. I recommend this to every freelancer!"
         },
         {
             id: 4,
-            comment: "The user interface is so intuitive and smooth, it's a joy to use every day.",
+            comment: "The user interface is absolutely fantastic! It’s so intuitive and easy to navigate that using the platform has become an essential part of my daily routine."
         },
         {
             id: 5,
-            comment: "From the moment I signed up, my productivity skyrocketed. Amazing tool!",
+            comment: "I signed up on a whim, and it’s easily the best decision I’ve made for my career. My productivity has never been this high—Skill Connect is a revelation."
         },
         {
             id: 6,
-            comment: "A must-have for anyone looking to streamline their workflow. It's a lifesaver.",
+            comment: "Skill Connect is the missing link I never knew I needed. It has simplified my workflow and helped me focus on what truly matters in my projects."
         },
+        {
+            id: 7,
+            comment: "Since joining Skill Connect, I've felt more organized, productive, and in control of my work. It’s like a personal assistant that never fails."
+        },
+        {
+            id: 8,
+            comment: "I was skeptical at first, but Skill Connect exceeded all my expectations. The tools provided have genuinely transformed the way I manage my freelance projects."
+        },
+        {
+            id: 9,
+            comment: "The platform's simplicity and functionality are what make it a daily staple in my workflow. It's made organizing and tracking my projects so much easier!"
+        },
+        {
+            id: 10,
+            comment: "If you’re serious about improving your productivity and efficiency, you need Skill Connect in your life. It’s been an absolute lifesaver in keeping me on track."
+        }
     ];
+
 
     return (
         <div className="flex-col flex gap-5 my-32 px-4 sm:px-8 md:px-12 lg:mx-64">

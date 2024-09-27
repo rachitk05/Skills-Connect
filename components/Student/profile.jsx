@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
@@ -13,70 +13,31 @@ import { Badge } from "@/components/ui/badge"
 import { Separator } from "@/components/ui/separator"
 import { Pencil, Coffee, LinkIcon, PlusCircle, X } from 'lucide-react'
 
-const initialProfileData = {
-    name: "Charlotte King",
-    email: "charlotte.king@example.com",
-    skills: ["iOS Development", "Swift", "SwiftUI", "UIKit", "Xcode", "Git", "RESTful APIs", "Core Data", "Firebase", "UI/UX Design"],
-    certifications: [
-        "Apple Certified iOS Developer",
-        "AWS Certified Developer - Associate",
-        "Scrum Alliance Certified ScrumMaster"
-    ],
-    portfolio: "https://www.charlottekingportfolio.com",
-    experience: [
-        {
-            title: "iOS Developer Intern",
-            company: "Mobile Solutions Inc.",
-            duration: "9 months",
-            description: "Developed and maintained iOS applications, collaborated with cross-functional teams, and implemented new features using Swift and UIKit."
-        },
-        {
-            title: "Freelance iOS Developer",
-            company: "Self-employed",
-            duration: "1 year",
-            description: "Created custom iOS applications for small businesses and startups, focusing on clean code and intuitive user interfaces."
-        }
-    ],
-    education: [
-        {
-            degree: "Bachelor of Science in Mobile App Development",
-            school: "Drexel University",
-            year: "2023"
-        },
-        {
-            degree: "iOS Development Bootcamp",
-            school: "App Academy",
-            year: "2022"
-        }
-    ],
-    age: 21,
-    bio: "Passionate iOS developer with a keen eye for design and a drive for creating intuitive mobile applications. I thrive on turning complex problems into simple, beautiful, and intuitive interface designs. When I'm not coding, you'll find me exploring new coffee shops or contributing to open-source projects.",
-    profilePhoto: "",
-    tagline: "Crafting Tomorrow's Apps, One Line at a Time",
-    projects: [
-        {
-            name: "EcoTrack",
-            url: "https://github.com/charlotteking/EcoTrack",
-            description: "An iOS app that helps users track and reduce their carbon footprint through daily challenges and tips."
-        },
-        {
-            name: "MindfulMinutes",
-            url: "https://github.com/charlotteking/MindfulMinutes",
-            description: "A meditation and mindfulness app with customizable sessions and progress tracking."
-        },
-        {
-            name: "SwiftRecipes",
-            url: "https://github.com/charlotteking/SwiftRecipes",
-            description: "A recipe management app that uses Core Data for local storage and integrates with a recipe API."
-        }
-    ],
-    interests: ["Mobile Technology", "UI/UX Design", "Artificial Intelligence", "Sustainable Tech", "Coffee Brewing"],
-    languages: ["English (Native)", "Spanish (Intermediate)", "French (Basic)"]
-}
-
-export default function EditableProfileDisplay() {
-    const [profileData, setProfileData] = useState(initialProfileData)
+export default function StudentProfileDisplay({ studentId }) {
+    const [profileData, setProfileData] = useState(null)
     const [isEditing, setIsEditing] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
+    const [error, setError] = useState(null)
+
+    useEffect(() => {
+        const fetchStudentData = async () => {
+            try {
+                const response = await fetch(`/api/students/${studentId}`)
+                if (!response.ok) {
+                    throw new Error('Failed to fetch student data')
+                }
+                const data = await response.json()
+                console.log(data)
+                setProfileData(data.data)
+                setIsLoading(false)
+            } catch (err) {
+                setError(err.message)
+                setIsLoading(false)
+            }
+        }
+
+        fetchStudentData()
+    }, [studentId])
 
     const handleInputChange = (e, section = null, index = null) => {
         const { name, value } = e.target
@@ -118,9 +79,32 @@ export default function EditableProfileDisplay() {
         }))
     }
 
-    const handleSave = () => {
-        console.log(profileData)
-        setIsEditing(false)
+    const handleSave = async () => {
+        try {
+            const response = await fetch(`/api/students/${studentId}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(profileData)
+            })
+            if (!response.ok) {
+                throw new Error('Failed to update student data')
+            }
+            setIsEditing(false)
+        } catch (err) {
+            console.error(err)
+        }
+    }
+
+    if (isLoading) {
+        return <div className="text-center py-10">Loading...</div>
+    }
+
+    if (error) {
+        return <div className="text-center py-10 text-red-500">Error: {error}</div>
+    }
+
+    if (!profileData) {
+        return <div className="text-center py-10">No data available</div>
     }
 
     const renderEditDialog = () => (
@@ -333,8 +317,7 @@ export default function EditableProfileDisplay() {
                         <Button type="button" variant="outline" onClick={() => addArrayItem('languages')} className="mt-2">
                             <PlusCircle className="h-4 w-4 mr-2" /> Add Language
                         </Button>
-                    </div>
-                </div>
+                    </div>                </div>
                 <Button onClick={handleSave}>Save changes</Button>
             </DialogContent>
         </Dialog>
@@ -354,11 +337,11 @@ export default function EditableProfileDisplay() {
                             <div className="md:w-1/3">
                                 <div className="sticky top-8">
                                     <Image
-                                        src={profileData.profilePhoto}
+                                        src={profileData.profilePhoto || "https://i.pinimg.com/736x/0d/64/98/0d64989794b1a4c9d89bff571d3d5842.jpg"}
                                         alt={profileData.name}
                                         width={150}
                                         height={150}
-                                        className="rounded-full mx-auto mb-4 border-1"
+                                        className="rounded-full mx-auto mb-4 max-h-40 max-w-40"
                                     />
                                     <h1 className="text-3xl font-bold text-center mb-2">{profileData.name}</h1>
                                     <p className="text-gray-600 text-center mb-4">{profileData.tagline}</p>

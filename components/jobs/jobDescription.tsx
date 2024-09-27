@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Bookmark, MapPin, DollarSign, Briefcase, Globe, GraduationCap, Coffee, Heart } from "lucide-react";
+import { Bookmark, MapPin, DollarSign, Briefcase, Globe,  } from "lucide-react";
+import {useRouter} from "next/navigation";
 
 interface Leader {
     name: string;
@@ -12,11 +13,12 @@ interface Leader {
 }
 
 interface Benefit {
-    icon: React.ElementType;
+    icon: any;
     text: string;
 }
 
 interface JobDetailsType {
+    _id:string,
     title: string;
     company: string;
     logo: string;
@@ -37,6 +39,7 @@ interface JobDetailsProps {
 }
 
 export default function JobDetails({ jobId }: JobDetailsProps) {
+    const router = useRouter();
     const [jobDetails, setJobDetails] = useState<JobDetailsType | null>(null);
 
     useEffect(() => {
@@ -62,7 +65,7 @@ export default function JobDetails({ jobId }: JobDetailsProps) {
     if (!jobDetails) {
         return <div>Loading...</div>; // Loading state
     }
-
+    console.log(jobDetails);
 
     return (
         <div className="container mx-auto px-4 py-8">
@@ -82,11 +85,8 @@ export default function JobDetails({ jobId }: JobDetailsProps) {
                     </div>
                 </div>
                 <div className="flex flex-col sm:flex-row gap-4">
-                    <Button variant="outline">
-                        <Bookmark className="w-4 h-4 mr-2" />
-                        Save
-                    </Button>
-                    <Button size="lg">Apply Now</Button>
+
+                    <Button onClick={() => router.push(`/jobs/${jobDetails._id}/congrats`)} size="lg">Apply Now</Button>
                 </div>
             </div>
 
@@ -144,6 +144,7 @@ export default function JobDetails({ jobId }: JobDetailsProps) {
                                 {jobDetails.benefits.map((benefit, index) => (
                                     <li key={index} className="flex items-center">
                                         {/*<benefit.icon className="w-5 h-5 mr-3 text-primary" />*/}
+                                        <span>{benefit.icon}</span>
                                         <span>{benefit.text}</span>
                                     </li>
                                 ))}
@@ -192,10 +193,6 @@ export default function JobDetails({ jobId }: JobDetailsProps) {
                         </CardContent>
                     </Card>
                 </div>
-            </div>
-
-            <div className="mt-8 text-center">
-                <Button size="lg">Apply Now</Button>
             </div>
         </div>
     );

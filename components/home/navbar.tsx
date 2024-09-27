@@ -1,4 +1,6 @@
-import React from "react";
+'use client'
+import React, { useEffect } from "react";
+import { useAuthStore } from "@/authStore";
 import {
     Navbar,
     NavbarBrand,
@@ -10,12 +12,32 @@ import {
     DropdownTrigger,
     Dropdown,
     DropdownMenu,
-    NavbarMenu, NavbarMenuItem, NavbarMenuToggle
+    NavbarMenu,
+    NavbarMenuItem,
+    NavbarMenuToggle,
+    Avatar
 } from "@nextui-org/react";
-import {ChevronDown, Lock, Activity, Flash, Server, TagUser, Scale} from "./Icons";
+import { ChevronDown, Lock, Activity, Flash, Server, TagUser, Scale } from "./Icons";
 
 export default function Header() {
+    const { isLoggedIn, userType, setIsLoggedIn, setUserType } = useAuthStore();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+    useEffect(() => {
+        const storedIsLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const storedUserType = localStorage.getItem('userType') as "student" | "company" | null;
+        if (storedIsLoggedIn && storedUserType) {
+            setIsLoggedIn(true);
+            setUserType(storedUserType);
+        }
+    }, []);
+
+    const handleLogout = () => {
+        setIsLoggedIn(false);
+        setUserType(null);
+        localStorage.removeItem('isLoggedIn');
+        localStorage.removeItem('userType');
+    };
 
     const menuItems = [
         "Profile",
@@ -29,6 +51,7 @@ export default function Header() {
         "Help & Feedback",
         "Log Out",
     ];
+
     const icons = {
         chevron: <ChevronDown fill="currentColor" size={16} />,
         scale: <Scale className="text-warning" fill="currentColor" size={30} />,
@@ -39,7 +62,6 @@ export default function Header() {
         user: <TagUser className="text-danger" fill="currentColor" size={30} />,
     };
 
-
     return (
         <Navbar onMenuOpenChange={setIsMenuOpen}>
             <NavbarContent>
@@ -48,7 +70,9 @@ export default function Header() {
                     className="sm:hidden"
                 />
                 <NavbarBrand>
-                    <p className="font-bold text-inherit">SKILL CONNECT</p>
+                    <Button as={Link} href={"/"} variant={"ghost"} className={"text-black border-none"} >
+                        <p className="font-bold text-inherit">SKILL CONNECT</p>
+                    </Button>
                 </NavbarBrand>
             </NavbarContent>
 
@@ -74,67 +98,103 @@ export default function Header() {
                             base: "gap-4",
                         }}
                     >
-                        <DropdownItem
-                            key="autoscaling"
-                            description="ACME scales apps to meet user demand, automagically, based on load."
+                        <DropdownItem as={Link} href={"/coming_soon"}
+                            key="whiteboards"
+                            description="Interactive brainstorming and mind mapping."
                             startContent={icons.scale}
                         >
-                            Autoscaling
+                            Whiteboards
                         </DropdownItem>
-                        <DropdownItem
-                            key="usage_metrics"
-                            description="Real-time metrics to debug issues. Slow query added? We’ll show you exactly where."
-                            startContent={icons.activity}
-                        >
-                            Usage Metrics
-                        </DropdownItem>
-                        <DropdownItem
-                            key="production_ready"
-                            description="ACME runs on ACME, join us and others serving requests at web scale."
-                            startContent={icons.flash}
-                        >
-                            Production Ready
-                        </DropdownItem>
-                        <DropdownItem
-                            key="99_uptime"
-                            description="Applications stay on the grid with high availability and high uptime guarantees."
-                            startContent={icons.server}
-                        >
-                            +99% Uptime
-                        </DropdownItem>
-                        <DropdownItem
-                            key="supreme_support"
-                            description="Overcome any challenge with a supporting team ready to respond."
+                        <DropdownItem as={Link} href={"/coming_soon"}
+                            key="document_collaboration"
+                            description="Real-time document editing and writing."
                             startContent={icons.user}
                         >
-                            +Supreme Support
+                            Document Collaboration
+                        </DropdownItem>
+                        <DropdownItem as={Link} href={"/coming_soon"}
+                            key="chat_video"
+                            description="Built-in communication tools."
+                            startContent={icons.flash}
+                        >
+                            Chat and Video Conferencing
+                        </DropdownItem>
+                        <DropdownItem as={Link} href={"/coming_soon"}
+                            key="task_comments"
+                            description="Discussion threads for project clarity."
+                            startContent={icons.server}
+                        >
+                            Task Comments & Threads
+                        </DropdownItem>
+                        <DropdownItem as={Link} href={"/coming_soon"}
+                            key="time_tracker"
+                            description="Manage working hours and deadlines."
+                            startContent={icons.user}
+                        >
+                            Time Tracker
+                        </DropdownItem>
+                        <DropdownItem as={Link} href={"/coming_soon"}
+                            key="task_management"
+                            description="Create to-do lists, prioritize tasks, and monitor progress."
+                            startContent={icons.lock}
+                        >
+                            Task Management
                         </DropdownItem>
                     </DropdownMenu>
                 </Dropdown>
 
                 <NavbarItem>
-                    <Link href="#" color={"foreground"}>
+                    <Link href="/student/all" color={"foreground"}>
                         For Companies
                     </Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link color="foreground" href="/jobs">
+                    <Link color="foreground" href="/company/all">
                         For Job Seekers
                     </Link>
                 </NavbarItem>
-            </NavbarContent>
-            <NavbarContent justify="end">
-                <NavbarItem className="hidden lg:flex">
-                    <Button as={Link} href={"/login"} color="primary" variant="ghost" >
-                    Login
-                    </Button>
-                </NavbarItem>
                 <NavbarItem>
-                    <Button as={Link} color="primary" href="/signup" variant="solid" className={"light:bg-black"}>
-                        Sign Up
-                    </Button>
+                    <Link color="foreground" href="/about_us">
+                        About Us
+                    </Link>
                 </NavbarItem>
             </NavbarContent>
+
+            {!isLoggedIn ? (
+                <NavbarContent justify="end">
+                    <NavbarItem className="hidden lg:flex">
+                        <Button as={Link} href={"/login"} color="primary" variant="ghost" >
+                            Login
+                        </Button>
+                    </NavbarItem>
+                    <NavbarItem>
+                        <Button as={Link} color="primary" href="/signup" variant="solid" className={"light:bg-black"}>
+                            Sign Up
+                        </Button>
+                    </NavbarItem>
+                </NavbarContent>
+            ) : (
+                <NavbarContent justify="end">
+                    <Dropdown placement="bottom-end">
+                        <DropdownTrigger>
+                            <Avatar
+                                isBordered
+                                as="button"
+                                className="transition-transform"
+                                color="secondary"
+                                size="md"
+                                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png"
+                            />
+                        </DropdownTrigger>
+                        <DropdownMenu aria-label="Profile Actions" variant="flat">
+                            <DropdownItem key="logout" color="danger" onClick={handleLogout}>
+                                Log Out
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                </NavbarContent>
+            )}
+
             <NavbarMenu>
                 {menuItems.map((item, index) => (
                     <NavbarMenuItem key={`${item}-${index}`}>

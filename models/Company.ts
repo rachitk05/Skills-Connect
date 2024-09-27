@@ -1,27 +1,40 @@
 import mongoose, { Schema, Document } from 'mongoose';
 
-export interface Company extends Document {
+interface ICompany extends Document {
     name: string;
     email: string;
     bio: string;
-    logo: string;
+    profilePicture: string;
     location: string;
     website: string;
     projectsPosted: number;
-    ratings: number;
-    category: string; // e.g., "Tech", "Education", "Finance"
+    ratings: string;
+    category: string;
+    foundedYear: number;
+    employeeCount: string;
+    specialties: string[];
+    clients: string[];
+    achievements: string[];
 }
 
-const CompanySchema = new Schema<Company>({
+const CompanySchema: Schema = new Schema({
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    bio: { type: String, required: true },
-    logo: { type: String, required: false },
-    location: { type: String, required: false },
-    website: { type: String, required: false },
+    bio: { type: String },
+    profilePicture: { type: String },
+    location: { type: String },
+    website: { type: String },
     projectsPosted: { type: Number, default: 0 },
-    ratings: { type: Number, default: 0 },
-    category: { type: String, required: true } // Added category field
+    ratings: { type: String },
+    category: { type: String },
+    foundedYear: { type: Number },
+    employeeCount: { type: String },
+    specialties: { type: [String] },
+    clients: { type: [String] },
+    achievements: { type: [String] }
 });
 
-export default mongoose.models.Company || mongoose.model<Company>('Company', CompanySchema);
+// Export the model
+const Company = mongoose.model<ICompany>('Company', CompanySchema);
+
+export default Company;

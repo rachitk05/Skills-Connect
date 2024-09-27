@@ -58,8 +58,8 @@ module.exports = {
   			}
   		},
   		backgroundImage: {
-  			signup: 'url("/img/signup.jpg")',
-  			login: 'url("/img/login.jpg")'
+  			signup: 'url("https://wallpapersmug.com/download/1920x1080/6c3146/dark-gradient-pattern-4k.jpg")',
+  			login: 'url("https://wallpapersmug.com/download/1920x1080/6c3146/dark-gradient-pattern-4k.jpg")'
   		},
   		borderRadius: {
   			lg: 'var(--radius)',

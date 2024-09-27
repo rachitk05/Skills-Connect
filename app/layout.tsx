@@ -1,6 +1,8 @@
+'use client'
 import {Providers} from "./providers";
 import '@/styles/globals.css'
 import { Roboto } from 'next/font/google'
+import Header from "@/components/home/navbar";
 
 const roboto = Roboto({
     weight: ['400', '700'],
