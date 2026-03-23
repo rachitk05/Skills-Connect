@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Building2, MapPin, Globe, Users, Search } from 'lucide-react'
-import {Button} from "@nextui-org/react";
+import { Button } from "@/components/ui/button";
 import {useRouter} from "next/navigation";
 
 interface Company {
@@ -54,9 +54,9 @@ export default function CompaniesListing() {
     }, [searchTerm, companies])
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
-                <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">Discover Innovative Companies</h1>
+                <h1 className="text-4xl font-bold text-center mb-8 text-foreground">Discover Innovative Companies</h1>
                 <div className="relative w-full max-w-md mx-auto mb-12">
                     <Input
                         type="text"
@@ -108,8 +108,8 @@ export default function CompaniesListing() {
                                 </div>
                                 <div className="mt-4">
                                     <Button
-                                        variant="bordered"
-                                        className="w-full text-blue-600 border-blue-600 hover:bg-blue-50"
+                                        variant="outline"
+                                        className="w-full text-primary border-primary hover:bg-primary/10"
                                         onClick={() => router.push(`/company/${company._id}`)}
                                     >
                                         View Company

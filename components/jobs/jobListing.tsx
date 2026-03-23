@@ -35,7 +35,7 @@ function JobCard({ job }: { job: Job }) {
                         <AvatarImage src={job.logo} alt={job.company}/>
                         <AvatarFallback>{job.company}</AvatarFallback>
                     </Avatar>
-                    <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                    <Badge variant="secondary" className="bg-primary/10 text-primary">
                         {job.title}
                     </Badge>
                 </div>
@@ -101,13 +101,13 @@ function JobCard({ job }: { job: Job }) {
             <div className="px-6 pb-6 flex justify-between items-center">
                 <Button
                     variant="outline"
-                    className="text-blue-600 border-blue-600 hover:bg-blue-50"
+                    className="text-primary border-primary hover:bg-primary/10"
                     onClick={() => router.push(`/jobs/${job._id}`)}
                 >
                     View Job
                 </Button>
                 <Button
-                    className="bg-blue-600 hover:bg-blue-700 text-white"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
                     onClick={() => router.push(`/jobs/${job._id}/congrats`)}
                 >
                     Apply Now
@@ -148,13 +148,13 @@ export default function Jobs() {
     }, [searchTerm, jobs])
 
     return (
-        <div className="min-h-screen bg-white py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
                 <header className="mb-12 text-center">
-                    <h1 className="text-4xl font-bold mb-6 text-gray-900">
+                    <h1 className="text-4xl font-bold mb-6 text-foreground">
                         Discover Your Dream Job
                     </h1>
-                    <p className="text-xl text-gray-600 mb-8">
+                    <p className="text-xl text-muted-foreground mb-8">
                         Explore exciting opportunities at top tech companies
                     </p>
                     <div className="relative w-full max-w-2xl mx-auto">
@@ -163,7 +163,7 @@ export default function Jobs() {
                             placeholder="Search jobs, companies, or skills..."
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="pl-10 pr-4 py-3 rounded-full border-2 border-gray-300 focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                            className="pl-10 pr-4 py-3 rounded-full border-2 border-gray-300 focus:border-primary focus:ring focus:ring-primary/20 focus:ring-opacity-50"
                         />
                         <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400" />
                     </div>

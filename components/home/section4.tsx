@@ -1,7 +1,7 @@
 'use client'
 
 import React from "react"
-import { Button } from "@nextui-org/react";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default function Section4() {
@@ -10,14 +10,18 @@ export default function Section4() {
             <div className="flex flex-col lg:gap-4 gap-10 lg:flex-row justify-between bg-emerald-900 rounded-3xl p-10">
                 {/* Text Section */}
                 <div className="flex flex-col items-start justify-center gap-12 text-zinc-50 lg:w-1/2">
-                    <Button  as={Link} variant="solid" color="primary" href={"/signup"} >Let's Get Started</Button>
+                    <Button asChild>
+                        <Link href="/signup">Let&apos;s Get Started</Link>
+                    </Button>
                     <h3 className="font-bold text-3xl lg:text-5xl">
                         Collaborate Seamlessly,<br />
                         Work Effortlessly.
                     </h3>
                     <p className="text-md lg:text-lg">
                         Our collaborative tools are designed to enhance teamwork and productivity. From interactive whiteboards and real-time document editing to integrated chat and video conferencing, you'll have everything you need to stay connected with your team. Keep track of tasks, discussions, and deadlines all in one place with features like time tracking, task management, and organized comment threads.                    </p>
-                    <Button variant="solid" as={Link} href={"/about_us"} color="primary">Learn More</Button>
+                    <Button asChild>
+                        <Link href="/about_us">Learn More</Link>
+                    </Button>
                 </div>
                 {/* Image Section */}
                 <div className="flex lg:w-1/2 justify-center items-center">

@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import connectToDatabase from '@/utils/db'; // Adjust the import based on your setup
 import Job from '@/models/Job'; // Adjust the import based on your setup
 
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-    const { id } = params; // Extract the job ID from the URL parameters
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
 
     try {
         await connectToDatabase(); // Ensure the database is connected

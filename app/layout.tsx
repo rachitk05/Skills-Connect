@@ -1,8 +1,6 @@
-'use client'
-import {Providers} from "./providers";
 import '@/styles/globals.css'
 import { Roboto } from 'next/font/google'
-import Header from "@/components/home/navbar";
+import type { Metadata } from 'next'
 
 const roboto = Roboto({
     weight: ['400', '700'],
@@ -11,13 +9,16 @@ const roboto = Roboto({
     display: 'swap',
 })
 
+export const metadata: Metadata = {
+    title: 'Skill Connect',
+    description: 'Find the right freelance service, right away. Connect skilled professionals with companies.',
+}
+
 export default function RootLayout({children}: { children: React.ReactNode }) {
     return (
-        <html lang="en"  className={`${roboto.className} light text-foreground backlight bg-background`} >
+        <html lang="en" className={`${roboto.className} light`}>
         <body>
-        <Providers>
             {children}
-        </Providers>
         </body>
         </html>
     );

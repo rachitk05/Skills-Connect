@@ -1,6 +1,9 @@
 'use client'
 import React, { useState, useMemo, useEffect } from "react";
-import { Button, Input, Select, SelectItem } from "@nextui-org/react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { EyeSlashFilledIcon } from "@/components/Auth/EyeSlashFilledIcon";
 import { EyeFilledIcon } from "@/components/Auth/EyeFilledIcon";
 import Link from "next/link";
@@ -73,50 +76,60 @@ export default function Login() {
 
                 {errorMessage && <p className="text-red-500 text-sm text-center">{errorMessage}</p>}
 
-                <Select
-                    label="User Type"
-                    placeholder="Select user type"
-                    selectedKeys={[userType]}
-                    className="w-full"
-                    onChange={(e) => setUserTypeLocal(e.target.value as "student" | "company")}
-                >
-                    <SelectItem key="student" value="student">Student</SelectItem>
-                    <SelectItem key="company" value="company">Company</SelectItem>
-                </Select>
+                <div className="space-y-2">
+                    <Label htmlFor="userType">User Type</Label>
+                    <Select value={userType} onValueChange={(value) => setUserTypeLocal(value as "student" | "company")}>
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select user type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="student">Student</SelectItem>
+                            <SelectItem value="company">Company</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
 
-                <Input
-                    isRequired
-                    type="email"
-                    variant="bordered"
-                    label="Email"
-                    value={email}
-                    onValueChange={setEmail}
-                    className="w-full"
-                    isInvalid={isInvalid}
-                    color={isInvalid ? "danger" : "default"}
-                    errorMessage={isInvalid && "Please enter a valid email"}
-                />
-                <Input
-                    isRequired
-                    label="Password"
-                    variant="bordered"
-                    placeholder="Enter your password"
-                    endContent={
-                        <button type="button" onClick={toggleVisibility} aria-label="toggle password visibility">
+                <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                        required
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="w-full"
+                    />
+                    {isInvalid && <p className="text-sm text-red-500">Please enter a valid email</p>}
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="password">Password</Label>
+                    <div className="relative">
+                        <Input
+                            required
+                            id="password"
+                            placeholder="Enter your password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            type={isVisible ? "text" : "password"}
+                            className="w-full pr-10"
+                        />
+                        <button
+                            type="button"
+                            onClick={toggleVisibility}
+                            aria-label="toggle password visibility"
+                            className="absolute right-3 top-1/2 -translate-y-1/2"
+                        >
                             {isVisible ? (
                                 <EyeSlashFilledIcon className="text-xl" />
                             ) : (
                                 <EyeFilledIcon className="text-xl" />
                             )}
                         </button>
-                    }
-                    value={password}
-                    onValueChange={setPassword}
-                    type={isVisible ? "text" : "password"}
-                    className="w-full"
-                />
+                    </div>
+                </div>
 
-                <Button color="primary" className="w-full" type="submit">
+                <Button className="w-full" type="submit">
                     Log In
                 </Button>
 
@@ -126,7 +139,7 @@ export default function Login() {
                     <hr className="flex-1"/>
                 </div>
 
-                <Button variant="bordered" className="w-full" onClick={handleGoogleSignIn}>
+                <Button variant="outline" className="w-full" type="button" onClick={handleGoogleSignIn}>
                     <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24"
                          viewBox="0 0 48 48">
                         <path fill="#FFC107"

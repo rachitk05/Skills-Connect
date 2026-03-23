@@ -3,8 +3,8 @@ import Company from '@/models/Company';
 import connectToDatabase from "@/utils/db";
 
 // Get Company by ID
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
-    const { id } = params; // Extract the job ID from the URL parameters
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     try {
         await connectToDatabase();
         const company = await Company.findById(id);
@@ -37,12 +37,13 @@ export async function POST(req: NextRequest) {
 }
 
 // Update Existing Company
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     try {
         const data = await req.json();
         await connectToDatabase();
 
-        const updatedCompany = await Company.findByIdAndUpdate(params.id, data, {
+        const updatedCompany = await Company.findByIdAndUpdate(id, data, {
             new: true, // Return the updated document
             runValidators: true // Validate the data against the schema
         });

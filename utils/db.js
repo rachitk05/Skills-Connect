@@ -6,11 +6,7 @@ const connectToDatabase = async () => {
     if (mongoose.connection.readyState >= 1) return; // Prevent multiple connections
 
     try {
-        // Connection options object passed directly
-        await mongoose.connect(url,{
-            useNewUrlParser: true,
-            useUnifiedTopology: true
-        });
+        await mongoose.connect(url);
 
         console.log("Database Connected successfully.");
     } catch (error) {

@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import { Button } from "@nextui-org/react";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 // Reusable component for each feature
@@ -31,8 +31,12 @@ export default function WhyUs() {
                         <Feature text="Easily communicate and collaborate with team members, allowing you to start contributing from day one with streamlined onboarding and project management features."/>
                     </div>
                     <div className="flex gap-5">
-                        <Button variant="bordered" as={Link} href={"/about_us"} color="primary">Learn More</Button>
-                        <Button as={Link} variant="solid" color="primary" href={"/signup"}>Sign Up</Button>
+                        <Button variant="outline" asChild>
+                            <Link href="/about_us">Learn More</Link>
+                        </Button>
+                        <Button asChild>
+                            <Link href="/signup">Sign Up</Link>
+                        </Button>
                     </div>
                 </div>
 
@@ -48,8 +52,12 @@ export default function WhyUs() {
                         <Feature text="Easily collaborate with your team to review, interview, and hire candidates without leaving the platform."/>
                     </div>
                     <div className="flex gap-5 mt-6">
-                        <Button variant="bordered" as={Link} href={"/about_us"} color="primary">Learn More</Button>
-                        <Button as={Link} variant="solid" color="primary"  href={"/signup"}>Sign Up</Button>
+                        <Button variant="outline" asChild>
+                            <Link href="/about_us">Learn More</Link>
+                        </Button>
+                        <Button asChild>
+                            <Link href="/signup">Sign Up</Link>
+                        </Button>
                     </div>
                 </div>
             </div>

@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Briefcase, GraduationCap, Code, Search } from 'lucide-react'
-import {Button} from "@nextui-org/react";
+import { Button } from "@/components/ui/button";
 import {useRouter} from "next/navigation";
 
 interface Student {
@@ -52,9 +52,9 @@ export default function StudentsListing() {
     }, [searchTerm, students])
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-green-50 to-teal-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="min-h-screen bg-background py-12 px-4 sm:px-6 lg:px-8">
             <div className="max-w-7xl mx-auto">
-                <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">Discover Talented Students</h1>
+                <h1 className="text-4xl font-bold text-center mb-8 text-foreground">Discover Talented Students</h1>
                 <div className="relative w-full max-w-md mx-auto mb-12">
                     <Input
                         type="text"
@@ -103,8 +103,8 @@ export default function StudentsListing() {
                                 </div>
                                 <div className="mt-4">
                                     <Button
-                                        variant="bordered"
-                                        className="w-full text-green-600 border-green-600 hover:bg-green-50"
+                                        variant="outline"
+                                        className="w-full text-primary border-primary hover:bg-primary/10"
                                         onClick={() => router.push(`/student/${student._id}`)}
                                     >
                                         View Profile

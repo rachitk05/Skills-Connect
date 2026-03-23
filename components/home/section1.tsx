@@ -1,13 +1,13 @@
 'use client'
 import React from "react";
-import { Button } from "@nextui-org/react";
-import { Input } from "@nextui-org/input";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import {useRouter} from "next/navigation";
 
 export default function Section1() {
     const router = useRouter();
-    
+
     return (
         <section>
             <div
@@ -19,9 +19,7 @@ export default function Section1() {
                 <div className="flex flex-col sm:flex-row w-full gap-4 sm:gap-6 items-center justify-center">
                     <Input
                         type="text"
-                        variant="bordered"
-                        className="bg-white text-black rounded-2xl w-full sm:w-3/4 md:w-2/3 lg:w-1/2"
-                        size="lg"
+                        className="bg-white text-black rounded-2xl w-full sm:w-3/4 md:w-2/3 lg:w-1/2 h-12"
                         aria-label="Search for any service"
                         placeholder="Search for any Service"
                     />
@@ -117,17 +115,15 @@ export default function Section1() {
                     Your gateway to success starts here—explore, bid, and make a mark with our streamlined platform designed for you.
                 </h2>
                 <div className="flex flex-col sm:flex-row items-center justify-center w-full gap-4 sm:gap-6">
-                    <Button as={Link} href={"/jobs/new"} className="w-full max-w-sm py-12 sm:p-8  sm:w-1/3 md:p-8 lg:p-8 md:w-1/4 p-4 bg-black text-white text-lg" color="primary"
-                            variant="solid">
-                        Find Your Next Hire
+                    <Button asChild className="w-full max-w-sm py-12 sm:p-8  sm:w-1/3 md:p-8 lg:p-8 md:w-1/4 p-4 bg-black text-white text-lg hover:bg-black/90">
+                        <Link href="/jobs/new">Find Your Next Hire</Link>
                     </Button>
-                    <Button as={Link} href={'/jobs'}
+                    <Button asChild variant="outline"
                         className="w-full max-w-sm sm:p-8 py-12 sm:w-1/3 md:p-8 lg:p-8 md:w-1/4 p-4 bg-transparent border-2 border-black hover:bg-black hover:text-white text-black text-lg">
-                        Find Your Next Job
+                        <Link href="/jobs">Find Your Next Job</Link>
                     </Button>
                 </div>
             </div>
         </section>
     );
 }
-

@@ -1,6 +1,10 @@
 'use client'
 import React, {useState, useMemo, useEffect} from "react";
-import {Button, Checkbox, Input, Select, SelectItem} from "@nextui-org/react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import {EyeSlashFilledIcon} from "@/components/Auth/EyeSlashFilledIcon";
 import {EyeFilledIcon} from "@/components/Auth/EyeFilledIcon";
 import {useRouter} from 'next/navigation';
@@ -106,83 +110,97 @@ export default function Signup() {
                 {error.email && <p className="text-red-600">{error.email}</p>}
                 {error.confirmPassword && <p className="text-red-600">{error.confirmPassword}</p>}
 
-                <Select
-                    label="User Type"
-                    placeholder="Select user type"
-                    selectedKeys={[formData.userType]}
-                    className="w-full"
-                    onChange={(e) => setFormData({...formData, userType: e.target.value as "student" | "company"})}
-                >
-                    <SelectItem key="student" value="student">Student</SelectItem>
-                    <SelectItem key="company" value="company">Company</SelectItem>
-                </Select>
+                <div className="space-y-2">
+                    <Label htmlFor="userType">User Type</Label>
+                    <Select value={formData.userType} onValueChange={(value) => setFormData({...formData, userType: value as "student" | "company"})}>
+                        <SelectTrigger className="w-full">
+                            <SelectValue placeholder="Select user type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            <SelectItem value="student">Student</SelectItem>
+                            <SelectItem value="company">Company</SelectItem>
+                        </SelectContent>
+                    </Select>
+                </div>
 
-                <Input
-                    isRequired
-                    type="text"
-                    variant="bordered"
-                    label="Username"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleInputChange}
-                    className="w-full"
-                />
-                <Input
-                    isRequired
-                    type="email"
-                    variant="bordered"
-                    label="Email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full"
-                    isInvalid={isInvalid}
-                    color={isInvalid ? "danger" : "default"}
-                    errorMessage={isInvalid && "Please enter a valid email"}
-                />
-                <Input
-                    isRequired
-                    label="Password"
-                    variant="bordered"
-                    name="password"
-                    placeholder="Enter your password"
-                    value={formData.password}
-                    onChange={handleInputChange}
-                    type={isPassVisible ? "text" : "password"}
-                    endContent={
-                        <button type="button" onClick={togglePassVisibility} aria-label="toggle password visibility">
+                <div className="space-y-2">
+                    <Label htmlFor="name">Username</Label>
+                    <Input
+                        required
+                        id="name"
+                        type="text"
+                        name="name"
+                        value={formData.name}
+                        onChange={handleInputChange}
+                        className="w-full"
+                    />
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                        required
+                        id="email"
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="w-full"
+                    />
+                    {isInvalid && <p className="text-sm text-red-500">Please enter a valid email</p>}
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="password">Password</Label>
+                    <div className="relative">
+                        <Input
+                            required
+                            id="password"
+                            name="password"
+                            placeholder="Enter your password"
+                            value={formData.password}
+                            onChange={handleInputChange}
+                            type={isPassVisible ? "text" : "password"}
+                            className="w-full pr-10"
+                        />
+                        <button type="button" onClick={togglePassVisibility} aria-label="toggle password visibility" className="absolute right-3 top-1/2 -translate-y-1/2">
                             {isPassVisible ? <EyeSlashFilledIcon /> : <EyeFilledIcon />}
                         </button>
-                    }
-                    className="w-full"
-                />
-                <Input
-                    isRequired
-                    label="Confirm Password"
-                    variant="bordered"
-                    name="confirmPassword"
-                    placeholder="Confirm your password"
-                    value={formData.confirmPassword}
-                    onChange={handleInputChange}
-                    type={isConfPassVisible ? "text" : "password"}
-                    endContent={
-                        <button type="button" onClick={toggleConfPassVisibility} aria-label="toggle password visibility">
+                    </div>
+                </div>
+
+                <div className="space-y-2">
+                    <Label htmlFor="confirmPassword">Confirm Password</Label>
+                    <div className="relative">
+                        <Input
+                            required
+                            id="confirmPassword"
+                            name="confirmPassword"
+                            placeholder="Confirm your password"
+                            value={formData.confirmPassword}
+                            onChange={handleInputChange}
+                            type={isConfPassVisible ? "text" : "password"}
+                            className="w-full pr-10"
+                        />
+                        <button type="button" onClick={toggleConfPassVisibility} aria-label="toggle password visibility" className="absolute right-3 top-1/2 -translate-y-1/2">
                             {isConfPassVisible ? <EyeSlashFilledIcon /> : <EyeFilledIcon />}
                         </button>
-                    }
-                    className="w-full"
-                />
+                    </div>
+                </div>
 
-                <Checkbox
-                    size="sm"
-                    checked={termsAccepted}
-                    onChange={() => setTermsAccepted(!termsAccepted)}
-                    isRequired
-                >
-                    I agree with the <span className="text-blue-600">Terms</span> and <span className="text-blue-600">Privacy Policy</span>.
-                </Checkbox>
+                <div className="flex items-center space-x-2">
+                    <Checkbox
+                        id="terms"
+                        checked={termsAccepted}
+                        onCheckedChange={(checked) => setTermsAccepted(checked === true)}
+                        required
+                    />
+                    <Label htmlFor="terms" className="text-sm">
+                        I agree with the <span className="text-blue-600">Terms</span> and <span className="text-blue-600">Privacy Policy</span>.
+                    </Label>
+                </div>
 
-                <Button type="submit" color="primary" className="w-full">
+                <Button type="submit" className="w-full">
                     Sign Up
                 </Button>
 
@@ -192,8 +210,8 @@ export default function Signup() {
                     <hr className="flex-1" />
                 </div>
 
-                <Button variant="bordered" className="w-full" onClick={handleGoogleSignIn}>
-                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100%" height="100%"
+                <Button variant="outline" className="w-full" type="button" onClick={handleGoogleSignIn}>
+                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24"
                          viewBox="0 0 48 48">
                         <path fill="#FFC107"
                               d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path>

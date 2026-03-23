@@ -3,10 +3,11 @@ import Student from '@/models/Student';
 import connectToDatabase from "@/utils/db";
 
 // Get Student by ID
-export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+export async function GET(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     try {
         await connectToDatabase();
-        const student = await Student.findById(params.id);
+        const student = await Student.findById(id);
 
         if (!student) {
             return NextResponse.json({ error: 'Student not found' }, { status: 404 });
@@ -21,12 +22,13 @@ export async function GET(req: NextRequest, { params }: { params: { id: string }
 
 
 // Update Existing Student
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+    const { id } = await params;
     try {
         const data = await req.json();
         await connectToDatabase();
 
-        const updatedStudent = await Student.findByIdAndUpdate(params.id, data, {
+        const updatedStudent = await Student.findByIdAndUpdate(id, data, {
             new: true, // Return the updated document
             runValidators: true // Validate the data against the schema
         });
